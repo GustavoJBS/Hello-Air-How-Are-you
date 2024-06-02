@@ -4,7 +4,7 @@
 
         <template v-if="JSON.stringify(latlng.searchLatLng) !== JSON.stringify(latlng.currentLatLng)">
             <div class="fixed flex justify-center w-screen top-0 mt-3 z-[9999] m-auto">
-                <SearchArea @click="findStations()" />
+                <SearchAreaButton @click="findStations()" />
             </div>
         </template>
     
@@ -21,7 +21,7 @@ import axios from "axios";
 
 import SideBar from "../components/SideBar.vue";
 
-import SearchArea from "../components/SearchArea.vue";
+import SearchAreaButton from "../components/SearchAreaButton.vue";
 
 const sideBarData = reactive({
     uid: null,
