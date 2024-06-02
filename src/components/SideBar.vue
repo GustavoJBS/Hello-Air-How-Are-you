@@ -110,13 +110,13 @@ function getRangeColor(aqi: number) {
                             target="_blank"
                             :href="sideBarData.stationUrl"
                         >
-                            {{ sideBarData.stationName }} (#{{ sideBarData.uid }})
+                            {{ sideBarData.stationName }} (#{{ String(sideBarData.uid).replace(/\D/g, "") }})
                         </a>
                     </template>
 
                     <template v-if="!sideBarData.stationUrl">
                         <h2 class="text-sm font-weight-black">
-                            {{ sideBarData.stationName }} (#{{ sideBarData.uid }})
+                            {{ sideBarData.stationName }} (#{{ String(sideBarData.uid).replace(/\D/g, "") }})
                         </h2>
                     </template>
 
