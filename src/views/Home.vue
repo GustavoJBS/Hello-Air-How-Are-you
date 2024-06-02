@@ -1,6 +1,12 @@
 <template>
     <div>    
         <SideBar :sideBarData="sideBarData" />
+
+        <template v-if="JSON.stringify(latlng.searchLatLng) !== JSON.stringify(latlng.currentLatLng)">
+            <div class="fixed flex justify-center w-screen top-0 mt-3 z-[9999] m-auto">
+                <SearchArea @click="findStations()" />
+            </div>
+        </template>
     
         <div id="mapContainer" class="w-screen h-screen"></div>
     </div>
@@ -15,7 +21,7 @@ import axios from "axios";
 
 import SideBar from "../components/SideBar.vue";
 
-let searchLatLng = [];
+import SearchArea from "../components/SearchArea.vue";
 
 const sideBarData = reactive({
     uid: null,
@@ -29,6 +35,11 @@ const sideBarData = reactive({
     aqi: null
 });
 
+const latlng = reactive({
+    searchLatLng: [],
+    currentLatLng: []
+})
+
 const baseUrl = 'https://api.waqi.info'
 
 let map;
@@ -36,35 +47,31 @@ let map;
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
         addMap(position.coords.latitude, position.coords.longitude);
-        // addMap(46.32347302852984, 2.396251296360319);
     }, function () {
-        addMap(0, 0);
+        addMap(46, 2);
     })
 })
 
 function addMap(latitude, longitude) {
     map = L.map("mapContainer", {
         minZoom: 6
-    }).setView([latitude, longitude], 6)
-        .on("moveend", function () {
-            findStations()
-        });
+    }).setView([latitude, longitude], 5).on("moveend", function () {
+        const {lat1, lat2, lng1, lng2} = getMapBounds()
+
+        latlng.currentLatLng = [lat1, lng1, lat2, lng2];
+    });
 
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)
 
-    findStations()
+    findStations() 
 }
 
 
 function findStations() {
-    const coordinates = map.getBounds();
-
-    const {lat: lat1, lng: lng1} = coordinates.getSouthWest();
-
-    const {lat: lat2, lng: lng2} = coordinates.getNorthEast();
+    const {lat1, lat2, lng1, lng2} = getMapBounds()
 
     axios.get(`${baseUrl}/map/bounds`, {
         params: {
@@ -74,7 +81,8 @@ function findStations() {
         }
     }).then(function (response) {
         const data = response?.data?.data
-        searchLatLng = [lat1, lng1, lat2, lng2];
+        latlng.searchLatLng = [lat1, lng1, lat2, lng2];
+        latlng.currentLatLng = [lat1, lng1, lat2, lng2];
 
        
         if (Array.isArray(data)) {
@@ -123,5 +131,20 @@ function clearMarkers() {
             layer.remove();
         }
     });
+}
+
+function getMapBounds() {
+    const coordinates = map.getBounds();
+
+    const {lat: lat1, lng: lng1} = coordinates.getSouthWest();
+
+    const {lat: lat2, lng: lng2} = coordinates.getNorthEast();
+
+    return {
+        lat1,
+        lng1,
+        lat2,
+        lng2 
+    }
 }
 </script>
