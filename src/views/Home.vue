@@ -70,6 +70,7 @@ function findStations() {
         params: {
             token: import.meta.env.VITE_API_KEY,
             latlng: `${lat1},${lng1},${lat2},${lng2}`,
+            networks: 'all'
         }
     }).then(function (response) {
         const data = response?.data?.data
