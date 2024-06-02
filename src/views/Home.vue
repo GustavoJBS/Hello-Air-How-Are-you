@@ -115,6 +115,8 @@ function findStations() {
                                     ? stationData.city.location
                                     : stationData.city.name
                                 sideBarData.aqi = isNaN(stationData.aqi) ? 0 : stationData.aqi
+
+                                map.panTo(new L.LatLng(coordinate.lat, coordinate.lon));
                             }
                         }).catch(() => {
                             sideBarData.open = false
