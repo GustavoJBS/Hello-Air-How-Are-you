@@ -10,7 +10,7 @@ defineProps<{
         cityName: string,
         stationLogo: string,
         stationUrl: null|string,
-        aqi: number|string
+        aqi: number
     }
 }>()
 
