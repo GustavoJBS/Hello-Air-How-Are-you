@@ -23,26 +23,48 @@ import SideBar from "../components/SideBar.vue";
 
 import SearchAreaButton from "../components/SearchAreaButton.vue";
 
-const sideBarData = reactive({
-    uid: null,
+export interface SideBarData {
+    uid: null|number,
+    open: boolean,
+    lat: number,
+    lng: number,
+    stationName: string,
+    cityName: string,
+    aqi: number,
+    stationLogo: string,
+    stationUrl: string
+}
+
+interface Coordinate {
+    lat: number,
+    lng: number
+}
+
+interface LatLng {
+    searchLatLng: number[],
+    currentLatLng: number[]
+}
+
+const sideBarData: SideBarData = reactive({
+    uid: 0,
     open: false,
-    lat: null,
-    lng: null,
-    stationName: null,
-    stationLogo: null,
-    stationUrl: null,
-    cityName: null,
-    aqi: null
+    lat: 0,
+    lng: 0,
+    stationName: '',
+    stationLogo: '',
+    stationUrl: '',
+    cityName: '',
+    aqi: 0
 });
 
-const latlng = reactive({
+const latlng: LatLng = reactive({
     searchLatLng: [],
     currentLatLng: []
 })
 
 const baseUrl = 'https://api.waqi.info'
 
-let map;
+let map: any;
 
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -52,7 +74,7 @@ onMounted(() => {
     })
 })
 
-function addMap(latitude, longitude) {
+function addMap(latitude: number, longitude: number) {
     map = L.map("mapContainer", {
         minZoom: 6
     }).setView([latitude, longitude], 5).on("moveend", function () {
@@ -128,7 +150,7 @@ function findStations() {
 }
 
 function clearMarkers() {
-    map.eachLayer((layer) => {
+    map.eachLayer((layer: any) => {
         if (layer instanceof L.Marker) {
             layer.remove();
         }
@@ -138,9 +160,9 @@ function clearMarkers() {
 function getMapBounds() {
     const coordinates = map.getBounds();
 
-    const {lat: lat1, lng: lng1} = coordinates.getSouthWest();
+    const {lat: lat1, lng: lng1}: Coordinate = coordinates.getSouthWest();
 
-    const {lat: lat2, lng: lng2} = coordinates.getNorthEast();
+    const {lat: lat2, lng: lng2}: Coordinate = coordinates.getNorthEast();
 
     return {
         lat1,

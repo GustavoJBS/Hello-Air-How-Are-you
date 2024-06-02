@@ -1,17 +1,9 @@
 <script setup lang="ts">
+import type { SideBarData } from '@/views/Home.vue';
+
 
 defineProps<{
-    sideBarData: {
-        uid: null|number,
-        open: boolean,
-        lat: number,
-        lng: number,
-        stationName: string,
-        cityName: string,
-        stationLogo: string,
-        stationUrl: null|string,
-        aqi: number
-    }
+    sideBarData: SideBarData
 }>()
 
 const rangeColors = [
