@@ -113,7 +113,7 @@ function findStations() {
             data.forEach(coordinate => {
                 L.marker([coordinate.lat, coordinate.lon], {
                     icon: L.icon({
-                        iconUrl: "src/assets/marker-icon.png",
+                        iconUrl: "/img/marker-icon.png",
                         iconSize: [25, 41],
                         iconAnchor: [12, 41],
                         tooltipAnchor: [16, -28],
