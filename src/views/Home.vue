@@ -111,7 +111,14 @@ function findStations() {
             clearMarkers()
 
             data.forEach(coordinate => {
-                L.marker([coordinate.lat, coordinate.lon])
+                L.marker([coordinate.lat, coordinate.lon], {
+                    icon: L.icon({
+                        iconUrl: "src/assets/marker-icon.png",
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        tooltipAnchor: [16, -28],
+                    })
+                })
                     .addTo(map)
                     .on('click', () => {
                         if (sideBarData.uid === coordinate.uid) {
