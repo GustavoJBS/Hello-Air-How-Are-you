@@ -22,6 +22,7 @@ import axios from "axios";
 import SideBar from "../components/SideBar.vue";
 
 import SearchAreaButton from "../components/SearchAreaButton.vue";
+import { getRangeColor } from "@/constants/helpers";
 
 export interface SideBarData {
     uid: null|number,
@@ -112,11 +113,19 @@ function findStations() {
 
             data.forEach(coordinate => {
                 L.marker([coordinate.lat, coordinate.lon], {
-                    icon: L.icon({
-                        iconUrl: "/img/marker-icon.png",
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        tooltipAnchor: [16, -28],
+                    icon: L.divIcon({
+                        className: 'bg-transparent',
+                        html: `
+                            <div
+                                class='marker-pin bg-${getRangeColor(Number(coordinate.aqi))?.color}'
+                            ></div>
+                            <span
+                                class="absolute w-full text-base my-2.5 text-center font-bold text-${getRangeColor(Number(coordinate.aqi))?.color}"
+                            >
+                                ${isNaN(coordinate.aqi) ? 0 : coordinate.aqi}
+                            </span>`,
+                        iconSize: [30, 42],
+                        iconAnchor: [15, 42]
                     })
                 })
                     .addTo(map)
