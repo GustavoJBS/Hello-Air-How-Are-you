@@ -3,43 +3,44 @@
 @tailwind utilities;
 
 
-body, html {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden  !important;
+body,
+html {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden !important;
 }
 
 .slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
+    transform: translateX(20px);
+    opacity: 0;
 }
 
 .marker-pin {
-  width: 32px;
-  height: 32px;
-  border-radius: 50% 50% 50% 0;
-  position: absolute;
-  transform: rotate(-45deg);
-  left: 50%;
-  top: 50%;
-  margin: -16px 0 0 -16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50% 50% 50% 0;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -17px 0 0 -17px;
 }
 
 .marker-pin::after {
     content: '';
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     margin: 3px 0 0 3px;
     background: #fff;
     position: absolute;
     border-radius: 50%;
- }
+}
