@@ -2,7 +2,9 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    fontFamily: {
+      'patua': ['Patua One', 'sans-serif'],
+    }
   },
   safelist: [
     {

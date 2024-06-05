@@ -1,14 +1,18 @@
 <template>
-    <div>    
-        <SideBar :sideBarData="sideBarData" />
+    <div class="flex flex-col relative w-screen h-screen">
+        <TopBar />
 
-        <template v-if="JSON.stringify(latlng.searchLatLng) !== JSON.stringify(latlng.currentLatLng)">
-            <div class="fixed flex justify-center w-screen top-0 mt-3 z-[9999] m-auto">
-                <SearchAreaButton @click="findStations()" />
-            </div>
-        </template>
+        <div class="h-full w-full relative">
+            <SideBar :sideBarData="sideBarData" />
     
-        <div id="mapContainer" class="w-screen h-screen"></div>
+            <template v-if="JSON.stringify(latlng.searchLatLng) !== JSON.stringify(latlng.currentLatLng)">
+                <div class="absolute flex justify-center w-screen top-0 mt-3 z-[9999] m-auto">
+                    <SearchAreaButton @click="findStations()" />
+                </div>
+            </template>
+        
+            <div id="mapContainer" class="w-full h-full"></div>
+        </div>
     </div>
 </template>
 
@@ -19,6 +23,7 @@ import L from "leaflet";
 import { onMounted, reactive } from "vue";
 import axios from "axios";
 
+import TopBar from "../components/TopBar.vue";
 import SideBar from "../components/SideBar.vue";
 
 import SearchAreaButton from "../components/SearchAreaButton.vue";
