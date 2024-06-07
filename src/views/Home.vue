@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col relative w-screen h-screen">
-        <TopBar />
+        <TopBar @searchCity="searchCity" />
 
         <div class="h-full w-full relative">
             <SideBar :sideBarData="sideBarData" />
@@ -70,7 +70,7 @@ const latlng: LatLng = reactive({
 
 const baseUrl = 'https://api.waqi.info'
 
-let map: any;
+let map: L.Map;
 
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -191,5 +191,24 @@ function getMapBounds() {
         lat2,
         lng2 
     }
+}
+
+function searchCity(search: string = '') {
+    axios.get(`${baseUrl}/search/`, {
+        params: {
+            token: import.meta.env.VITE_API_KEY,
+            keyword: search,
+        }
+    }).then(({data}) => {
+        if (data?.data && data.data.length > 0) {
+            const coordinates = data?.data?.[0]?.city?.geo ?? data?.data?.[0]?.station?.geo;
+
+            map.setView(coordinates, 10);
+
+            findStations()
+        } else {
+            alert('City not found')
+        }
+    })
 }
 </script>
