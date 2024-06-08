@@ -82,7 +82,7 @@ onMounted(() => {
 
 function addMap(latitude: number, longitude: number) {
     map = L.map("mapContainer", {
-        minZoom: 6
+        minZoom: 5
     }).setView([latitude, longitude], 5).on("moveend", function () {
         const {lat1, lat2, lng1, lng2} = getMapBounds()
 
