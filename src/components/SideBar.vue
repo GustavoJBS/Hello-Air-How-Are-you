@@ -16,7 +16,7 @@ function getImage(stationLogo: string) {
     <Transition name="slide-fade">
         <div
             v-show="sideBarData?.open"
-            class="absolute max-h-[95vh] overflow-y-auto top-0 right-0 m-5 z-[99999]"
+            class="absolute max-h-[-webkit-fill-available] overflow-y-auto top-0 right-0 m-5 z-[99999]"
         >
             <v-card
                 class="flex flex-col justify-center gap-2 w-80 !p-1 max-h-screen"
