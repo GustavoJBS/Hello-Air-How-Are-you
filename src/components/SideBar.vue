@@ -59,6 +59,10 @@ function getImage(stationLogo: string) {
                     <h3 class="text-xs font-weight-black italic">
                         {{ sideBarData.cityName }}
                     </h3>
+
+                    <h4 class="text-xs font-weight-black italic" v-show="sideBarData.lastTime">
+                        {{ sideBarData.lastTime }}
+                    </h4>
                 </v-card-text>
                 
 

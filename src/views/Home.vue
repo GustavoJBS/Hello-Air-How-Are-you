@@ -38,7 +38,8 @@ export interface SideBarData {
     cityName: string,
     aqi: number,
     stationLogo: string,
-    stationUrl: string
+    stationUrl: string,
+    lastTime: string
 }
 
 interface Coordinate {
@@ -60,7 +61,8 @@ const sideBarData: SideBarData = reactive({
     stationLogo: '',
     stationUrl: '',
     cityName: '',
-    aqi: 0
+    aqi: 0,
+    lastTime: ''
 });
 
 const latlng: LatLng = reactive({
@@ -127,7 +129,7 @@ function findStations() {
                             <span
                                 class="absolute w-full text-base my-2.5 text-center font-bold text-${getRangeColor(Number(coordinate.aqi))?.color}"
                             >
-                                ${isNaN(coordinate.aqi) ? 0 : coordinate.aqi}
+                                ${coordinate.aqi}
                             </span>`,
                         iconSize: [30, 42],
                         iconAnchor: [15, 42]
@@ -158,6 +160,7 @@ function findStations() {
                                     ? stationData.city.location
                                     : stationData.city.name
                                 sideBarData.aqi = isNaN(stationData.aqi) ? 0 : stationData.aqi
+                                sideBarData.lastTime = new Date(stationData.time.iso).toLocaleString()
 
                                 map.panTo(new L.LatLng(coordinate.lat, coordinate.lon));
                             }
